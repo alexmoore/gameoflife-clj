@@ -1,0 +1,1 @@
+(ns gameoflife-clj.core)
