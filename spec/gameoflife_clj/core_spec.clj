@@ -17,8 +17,16 @@
 
 (describe "A dead cell"
 
+  (it "should stay dead with less than 3 live neighbors"
+    (should= :dead (new-status :dead 0))
+    (should= :dead (new-status :dead 1))
+    (should= :dead (new-status :dead 2)))
+
   (it "should resurect with exactly 3 live neighbors"
-    (should= :live (new-status :dead 3))))
+    (should= :live (new-status :dead 3)))
+
+  (it "should stay dead with more than 3 live neighbors"
+    (should= :dead (new-status :dead 4))))
 
 (describe "Overpopulation"
 
@@ -43,4 +51,4 @@
 (describe "A World"
 
   (it "should be created with a defined width and height and all :dead cells"
-    (should= '((:dead :dead) (:dead :dead) (:dead :dead)) (create-world 2 3))))
+    (should= '((:dead :dead :dead) (:dead :dead :dead) (:dead :dead :dead)) (create-world 3 3))))

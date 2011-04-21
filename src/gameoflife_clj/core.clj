@@ -3,11 +3,11 @@
 (defstruct world :width :height :cells)
 (defstruct cell :x :y :state)
 
-(defn overpopulated? [live-neighbors]
-  (> live-neighbors 3))
-
 (defn underpopulated? [live-neighbors]
   (< live-neighbors 2))
+
+(defn overpopulated? [live-neighbors]
+  (> live-neighbors 3))
 
 (defn perfect-population? [live-neighbors]
   (or (= live-neighbors 2)
@@ -15,9 +15,11 @@
 
 (defn new-status [current-status live-neighbors]
   (cond
-    (or (underpopulated? live-neighbors)
-        (overpopulated? live-neighbors)) :dead
-    (perfect-population? live-neighbors) :live))
+    (and (= 3 live-neighbors)
+         (= current-status :dead)) :live
+    (and (perfect-population? live-neighbors)
+         (= current-status :live)) :live
+    :else :dead))
 
 (defn create-world [width height]
   (replicate height (replicate width :dead)))
